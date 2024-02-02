@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-image: url('/static/imag.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: auto; 
+            overflow-y: auto; 
+            background-position: center; 
+        }
+        .center-container {
+            text-align: center;
+        }
+        .input-container {
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        form {
+            display: inline-block;
+        }
+        button {
+            margin-top: 05px;
+            font-size: 25px; 
+            padding: 10px 30px; 
+            background-color: green; 
+            color: white; 
+        }
+        #product_url {
+            font-size: 24px;
+            height: 40px;   
+            width: 700px;   
+            text-align: center; 
+        }
+        #loading-message {
+            display: none; 
+            font-weight: bold; 
+            color: #ffd700; 
+            font-size: 50px; 
+            margin-top: 50px; 
+        }
+        #loading-message {
+            display: none; 
+        }
+        .result-text {
+            font-weight: bold;
+            color: #eb9f09;
+            font-size: 25px; 
+        }
+        .message-container {
+            font-size: 22px;
+            font-weight: bold;
+            color: rgb(230, 106, 106);
+            margin-bottom: 30px;
+        }
+        .message-container a {
+            font-size: 20px; /* Adjust the font size as needed */
+            color: yellow;   /* Set the text color to yellow */
+            text-decoration: none; /* Remove underline from the link */
+        }
+
+        .message-container a:hover {
+            text-decoration: underline; /* Add underline on hover */
+        }
+    </style>
+    <script>
+        function showLoading() {
+            document.querySelectorAll('.result-text').forEach(function(element) {
+                element.style.display = 'none';
+            });
+            document.getElementById('loading-message').style.display = 'block';
+            document.forms[0].submit();
+        }
+        
+    </script>   
+</head>
+<body>
+    <body>
+        <div class="center-container">
+            <!-- New div for the message and link -->
+            <div class="message-container">
+                <p> : رابط صفحتنا  </p>
+                <p> <a href="https://web.facebook.com/aliexpress14shopping" target="_blank">https://web.facebook.com/aliexpress14shopping</a> </p>
+            </div>
+    
+            <form method="POST" action="/" onsubmit="showLoading()">
+                <div class="input-container">
+                    <input type="text" id="product_url" name="product_url" placeholder="أدخل رابط المنتج هنا" required>
+                </div>
+                <button type="submit">إضغـط  هنا</button>
+            </form>
+        </form>
+        <div id="loading-message">جاري حساب السعر ... يرجى الإنتظار قليلا</div>
+        {% if result %}
+        {% if result.result_text == "عرض ترحيب" %}
+        <p class="result-text">للأسف هذا المنتج يحتوي على عرض ترحيب أو عرض مستخدم جديد أي أنه لا يظهر السعر الحقيقي للمنتج</p>
+        <p class="result-text">يمكنك التواصل مع صاحب الصفحة للتعرف على السعر الحقيقي </p>
+        <p class="result-text">  للتعرف أكثر على عرض الترحيب <a href="https://bit.ly/42YDVGo" target="_blank"> إضغط هنا  </a> </p>
+        {% else %}
+        <p class="result-text">السعر الإجمالي باحتساب كافة التكاليف هو: {{ result.get_day }} دج </p>
+        <p class="result-text">سعر المنتج في الموقع : € {{ result.price }}  </p>
+        <p class="result-text">سعر الشحن  : € {{ result.shipping }}  </p>
+        <p class="result-text">السعر الاجمالي بالأورو : € {{ result.total }}  </p>
+        {% endif %}
+    {% endif %}
+    </div>
+</body>
+
+</html>
