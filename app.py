@@ -24,13 +24,13 @@ def click_on_elements(driver):
         action.move_to_element(first_element_to_click).click().perform()        
         time.sleep(10)
 
+        
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
         # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
-        time.sleep(10)
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
 
@@ -51,10 +51,11 @@ def scrape_and_display(product_url):
     # print("List files in the 'drivers' directory:", files_in_drivers)
     # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
     # chrome_driver_path = ChromeDriverManager().install()
-    chrome_driver_path = "./drivers/chromedriver"  # أو المسار المطلق حسب تفضيلك
 
-# تعديل Service لاستخدام المسار الجديد
+    chrome_driver_path = "./drivers/chromedriver"  # تأكد من تحديث هذا المسار حسب موقع chromedriver لديك
+
     service = Service(executable_path=chrome_driver_path)
+    chrome_options = webdriver.ChromeOptions()
 # يمكنك هنا إضافة أي خيارات إضافية لـ Chrome
     driver = webdriver.Chrome(service=service, options=chrome_options)
     # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
@@ -72,6 +73,7 @@ def scrape_and_display(product_url):
     # chrome_options.add_argument('--lang=de-DE')
     # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
     # chrome_options.add_argument(f'user-agent={user_agent}')
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
         "price": 0,
@@ -89,7 +91,7 @@ def scrape_and_display(product_url):
         time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
-        target_image_url = "https://ae01.alicdn.com/kf/Sa717e78617ab41aa9ddfb9bf6df6356c0/388x144.png_.webp"
+        target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
         if image_elements or target_image_url in driver.page_source:
             sentence = "عرض ترحيب"
             print(sentence)
@@ -193,6 +195,9 @@ def index():
         product_url = request.form['product_url']
         result = scrape_and_display(product_url)
         return render_template('index.html', result=result)
+    return render_template('index.html', result=None)
+if __name__ == '__main__':
+    app.run(debug=False, threaded=True)
     return render_template('index.html', result=None)
 if __name__ == '__main__':
     app.run(debug=False, threaded=True)
