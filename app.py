@@ -22,13 +22,14 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(0.1)
+        time.sleep(1)
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
         # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
+        time.sleep(1)
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
 
