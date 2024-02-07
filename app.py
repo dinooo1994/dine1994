@@ -13,7 +13,7 @@ import time
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
-        first_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div/div'
+        first_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]'
         first_element = driver.find_element(By.XPATH, first_element_xpath)
         ActionChains(driver).move_to_element(first_element).click().perform()
         time.sleep(2)  
