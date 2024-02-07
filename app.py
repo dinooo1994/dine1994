@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
@@ -12,7 +11,25 @@ import os
 import time
 
 app = Flask(__name__)
-
+def click_on_elements(driver):
+    try:
+        first_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]'
+        first_element = driver.find_element(By.XPATH, first_element_xpath)
+        ActionChains(driver).move_to_element(first_element).click().perform()
+        time.sleep(0.5)  
+        second_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div'
+        second_element = driver.find_element(By.XPATH, second_element_xpath)
+        ActionChains(driver).move_to_element(second_element).click().perform()
+        time.sleep(0.5)
+        third_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]'
+        third_element = driver.find_element(By.XPATH, third_element_xpath)
+        ActionChains(driver).move_to_element(third_element).click().perform()
+        time.sleep(0.5)
+        fourth_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[7]'
+        fourth_element = driver.find_element(By.XPATH, fourth_element_xpath)
+        ActionChains(driver).move_to_element(fourth_element).click().perform()
+    except Exception as e:
+        print(f"Error clicking on the specified elements: {e}")
 def extract_numerical_value(text):
     try:
         return float(''.join(c for c in text if c.isdigit() or c in ['.', ',']))
