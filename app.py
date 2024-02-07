@@ -21,7 +21,7 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(3)
+        time.sleep(5)
 
         
 
@@ -31,7 +31,7 @@ def click_on_elements(driver):
         # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
-        time.sleep(3)
+        time.sleep(5)
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
 
