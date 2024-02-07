@@ -12,12 +12,6 @@ import os
 import time
 
 app = Flask(__name__)
-def click_on_elements(driver):
-    try:
-
-        
-    except Exception as e:
-        print(f"Error clicking on the specified elements: {e}")
 
 def extract_numerical_value(text):
     try:
