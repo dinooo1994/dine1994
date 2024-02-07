@@ -1,16 +1,15 @@
 from flask import Flask, render_template, request
 from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
-# from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# import os 
+import os 
 import time
-
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
@@ -31,7 +30,6 @@ def click_on_elements(driver):
         time.sleep(10)
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
-
 def extract_numerical_value(text):
     try:
         return float(''.join(c for c in text if c.isdigit() or c in ['.', ',']))
