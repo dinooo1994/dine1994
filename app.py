@@ -81,11 +81,12 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
+        time.sleep(0.5)
         click_on_elements(driver)
-        time.sleep(1)
+        # time.sleep(0.5)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
-        target_image_url = "https://ae01.alicdn.com/kf/Sa717e78617ab41aa9ddfb9bf6df6356c0/388x144.png_.webp"
+        target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
         if image_elements or target_image_url in driver.page_source:
             sentence = "عرض ترحيب"
             print(sentence)
