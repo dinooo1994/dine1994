@@ -13,18 +13,18 @@ import time
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
-        first_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]'
+        first_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div/div'
         first_element = driver.find_element(By.XPATH, first_element_xpath)
         ActionChains(driver).move_to_element(first_element).click().perform()
-        time.sleep(1)  
+        time.sleep(2)  
         second_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div'
         second_element = driver.find_element(By.XPATH, second_element_xpath)
         ActionChains(driver).move_to_element(second_element).click().perform()
-        time.sleep(1)
+        time.sleep(2)
         third_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]'
         third_element = driver.find_element(By.XPATH, third_element_xpath)
         ActionChains(driver).move_to_element(third_element).click().perform()
-        time.sleep(1)
+        time.sleep(2)
         fourth_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[7]'
         fourth_element = driver.find_element(By.XPATH, fourth_element_xpath)
         ActionChains(driver).move_to_element(fourth_element).click().perform()
