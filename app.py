@@ -59,7 +59,7 @@ def scrape_and_display(product_url):
     # chrome_options.add_argument("--proxy-server='direct://'")
     # chrome_options.add_argument("--proxy-bypass-list=*")
     # chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument('--headless')
+    #chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--ignore-certificate-errors')
@@ -81,12 +81,11 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(0.1)
         click_on_elements(driver)
         time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
-        target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
+        target_image_url = "https://ae01.alicdn.com/kf/Sa717e78617ab41aa9ddfb9bf6df6356c0/388x144.png_.webp"
         if image_elements or target_image_url in driver.page_source:
             sentence = "عرض ترحيب"
             print(sentence)
@@ -95,9 +94,6 @@ def scrape_and_display(product_url):
         soup = BeautifulSoup(page_source, 'html.parser')
         product_price_element = soup.find('div', class_='es--wrap--erdmPRe')
         product_price_text = product_price_element.text.strip().replace('€', '') if product_price_element else 'Not found'
-        # print("=================product_price_text============")
-        # print(product_price_text, product_price_element.text)
-        # print("===============================")
         shipping_price_element = soup.find('div', class_='dynamic-shipping-titleLayout')
         shipping_price_text = shipping_price_element.text.strip().replace('€', '') if shipping_price_element else 'Not found'
         relevant_shipping_info = shipping_price_text.split(':')[-1].strip()
