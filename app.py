@@ -14,28 +14,12 @@ import time
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
-        # Wait for the element to be present
-        first_element_to_click = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl'))
-        )
-        # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
+
+        first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
-        action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(0.2)
-
-
-        
-        fourth_element_to_click = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
-        )
-        action = ActionChains(driver)
-        action.move_to_element(fourth_element_to_click).click().perform()
-        time.sleep(0.6)
-
-        second_element_to_click = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
-        )
-        # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
+        action.move_to_element(first_element_to_click).click().perform()
+        time.sleep(1)
+        second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
     except Exception as e:
