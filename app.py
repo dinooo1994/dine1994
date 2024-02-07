@@ -1,15 +1,16 @@
 from flask import Flask, render_template, request
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import os 
+# import os 
 import time
+
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
@@ -20,16 +21,31 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(10)
-       second_element_to_click = WebDriverWait(driver, 20).until(
+        time.sleep(0.1)
+
+        third_element_to_click = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
+        )
+        action = ActionChains(driver)
+        action.move_to_element(third_element_to_click).click().perform()
+        time.sleep(0.1)
+        
+        fourth_element_to_click = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
+        )
+        action = ActionChains(driver)
+        action.move_to_element(fourth_element_to_click).click().perform()
+        time.sleep(0.6)
+
+        second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
         # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
-        time.sleep(10)
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
+
 def extract_numerical_value(text):
     try:
         return float(''.join(c for c in text if c.isdigit() or c in ['.', ',']))
