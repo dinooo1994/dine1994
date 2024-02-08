@@ -30,11 +30,10 @@ def click_on_elements(driver):
         action.move_to_element(third_element_to_click).click().perform()
         time.sleep(0.1)
         
-        fourth_element_to_click = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
-        )
-        action = ActionChains(driver)
-        action.move_to_element(fourth_element_to_click).click().perform()
+        element_to_click = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='_full_container_header_23_']/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]")))
+
+# النقر على العنصر
+        element_to_click.click()
         time.sleep(0.6)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
