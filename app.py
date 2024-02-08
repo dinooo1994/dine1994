@@ -28,7 +28,7 @@ def click_on_elements(driver):
         action = ActionChains(driver)
         action.move_to_element(third_element_to_click).click().perform()
         time.sleep(3)
-        
+    
         button_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]'
         button = driver.find_element(By.XPATH, button_xpath)
         button.click()
