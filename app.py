@@ -29,10 +29,9 @@ def click_on_elements(driver):
         action.move_to_element(third_element_to_click).click().perform()
         time.sleep(3)
     
-        button_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]'
-        button = driver.find_element(By.XPATH, button_xpath)
-        button.click()
-        time.sleep(3)
+        css_selector = "#_full_container_header_23_ > div.pc-header--right--2cV7LB8 > div > div.pc-header--items--tL_sfQ4 > div.es--wrap--RYjm1RT > div.es--contentWrap--ypzOXHr.es--visible--12ePDdG.es--rtl--2-LcjOR > div:nth-child(2) > div > div.select--popup--W2YwXWt.select--visiblePopup--VUtkTX2 > div:nth-child(56)"
+        element_to_click = driver.find_element(By.CSS_SELECTOR, css_selector)
+        element_to_click.click()
 
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
