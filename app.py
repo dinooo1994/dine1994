@@ -21,20 +21,20 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(0.1)
+        time.sleep(3)
 
         third_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
         )
         action = ActionChains(driver)
         action.move_to_element(third_element_to_click).click().perform()
-        time.sleep(0.1)
+        time.sleep(3)
         
         element_to_click = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='_full_container_header_23_']/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]")))
 
 # النقر على العنصر
         element_to_click.click()
-        time.sleep(0.6)
+        time.sleep(3)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
