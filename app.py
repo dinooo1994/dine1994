@@ -14,34 +14,35 @@ import time
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
+        # Wait for the element to be present
         first_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl'))
         )
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(3)
+        time.sleep(0.1)
 
         third_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
         )
         action = ActionChains(driver)
         action.move_to_element(third_element_to_click).click().perform()
-        time.sleep(3)
-        new_func(driver)
+        time.sleep(0.1)
+        
+        fourth_element_to_click = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
+        )
+        action = ActionChains(driver)
+        action.move_to_element(fourth_element_to_click).click().perform()
+        time.sleep(0.6)
+
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
         # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
-    except Exception as e:
-        print(f"Error clicking on the specified elements: {e}")
-
-def new_func(driver):
-    css_selector = "#_full_container_header_23_ > div.pc-header--right--2cV7LB8 > div > div.pc-header--items--tL_sfQ4 > div.es--wrap--RYjm1RT > div.es--contentWrap--ypzOXHr.es--visible--12ePDdG.es--rtl--2-LcjOR > div:nth-child(2) > div > div.select--popup--W2YwXWt.select--visiblePopup--VUtkTX2 > div:nth-child(56)"
-    element_to_click = driver.find_element(By.CSS_SELECTOR, css_selector)
-    element_to_click.click()
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
 
