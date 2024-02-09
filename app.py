@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 # from webdriver_manager.chrome import ChromeDriverManager
@@ -30,8 +29,10 @@ def click_on_elements(driver):
         action.move_to_element(third_element_to_click).click().perform()
         time.sleep(3)
         
-        element = driver.find_element(By.XPATH, "//*[@id='_full_container_header_23_']/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]")
-        driver.execute_script("arguments[0].click();", element)
+        
+
+        element = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@id='_full_container_header_23_']/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]")))
+        ActionChains(driver).move_to_element(element).click(element).perform()
 
         time.sleep(3)
 
