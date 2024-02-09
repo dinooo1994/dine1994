@@ -31,7 +31,7 @@ def click_on_elements(driver):
         
         
 
-        element_to_click = WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='_full_container_header_23_']/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]")))
+        element_to_click = driver.find_element(By.ID, "a2g0o.best.header.i2.39b7bffdPh3w9p")
         element_to_click.click()
 
 
