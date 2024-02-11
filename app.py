@@ -31,7 +31,7 @@ def click_on_elements(driver):
         
         
 
-        element_to_click = wait.until(EC.element_to_be_clickable((By.XPATH, "(//div[@class='select--item--32FADYB'])[21]")))
+        element_to_click = wait.until(EC.element_to_be_clickable((By.XPATH, "(//div[@class='select--item--32FADYB'])[20]")))
         element_to_click.click()
 
         time.sleep(3)
