@@ -31,9 +31,13 @@ def click_on_elements(driver):
         
         
 
-        element_to_click = wait.until(EC.element_to_be_clickable((By.XPATH, "(//div[@class='select--item--32FADYB'])[20]")))
-        element_to_click.click()
+        twenty_element_to_click = WebDriverWait(driver, 20).until(
+              EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'select--item--32FADYB')])[20]"))
+        )
 
+# استخدام ActionChains للتحرك إلى العنصر والنقر عليه
+        action = ActionChains(driver)
+        action.move_to_element(twenty_element_to_click).click().perform()
         time.sleep(3)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
