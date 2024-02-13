@@ -36,6 +36,7 @@ def click_on_elements(driver):
 # استخدام ActionChains للتحرك إلى العنصر والنقر عليه
         action = ActionChains(driver)
         action.move_to_element(twenty_element_to_click).click().perform()
+        time.sleep(3)
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
