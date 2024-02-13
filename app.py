@@ -31,13 +31,14 @@ def click_on_elements(driver):
         
         
 
-        twenty_element_to_click = WebDriverWait(driver, 20).until(
-              EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'select--item--32FADYB')])[20]"))
-        )
+        all_elements = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".select--item--32FADYB")))
 
-# استخدام ActionChains للتحرك إلى العنصر والنقر عليه
-        action = ActionChains(driver)
-        action.move_to_element(twenty_element_to_click).click().perform()
+# التحقق من وجود ما لا يقل عن 20 عنصراً قبل المحاولة للنقر
+        if len(all_elements) >= 20:
+    # النقر على العنصر العشرين
+            all_elements[19].click()  # تذكر أن الفهرسة تبدأ من 0
+        else:
+            print("لم يتم العثور على عدد كافٍ من العناصر.")
         time.sleep(3)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
