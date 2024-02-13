@@ -10,8 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 # import os 
 import time
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
@@ -22,21 +21,21 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(1)
+        time.sleep(3)
 
         third_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
         )
         action = ActionChains(driver)
         action.move_to_element(third_element_to_click).click().perform()
-        time.sleep(1)
+        time.sleep(3)
         
         fourth_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
         )
         action = ActionChains(driver)
         action.move_to_element(fourth_element_to_click).click().perform()
-        time.sleep(1)
+        time.sleep(3)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
@@ -64,13 +63,9 @@ def scrape_and_display(product_url):
     # print("List files in the 'drivers' directory:", files_in_drivers)
     # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
     # chrome_driver_path = ChromeDriverManager().install()
-
-    chrome_driver_path = "./drivers/chromedriver"  # تأكد من تحديث هذا المسار حسب موقع chromedriver لديك
-
-    service = Service(executable_path=chrome_driver_path)
-    chrome_options = webdriver.ChromeOptions()
-# يمكنك هنا إضافة أي خيارات إضافية لـ Chrome
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    chrome_driver_path = "drivers/chromedriver"
+    service = webdriver.ChromeService(executable_path= chrome_driver_path)
+    
     # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
     # chrome_options.add_argument("--window-size=1920,1080")
     # chrome_options.add_argument("--disable-extensions")
@@ -99,7 +94,7 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(1)
+        time.sleep(0.5)
         click_on_elements(driver)
         time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
