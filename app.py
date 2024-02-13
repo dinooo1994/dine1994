@@ -10,7 +10,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 # import os 
 import time
-
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
@@ -21,33 +22,21 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(1)
+        time.sleep(2)
 
         third_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
         )
         action = ActionChains(driver)
         action.move_to_element(third_element_to_click).click().perform()
-        time.sleep(1)
-def click_on_elements(driver):
-    try:
-        # انتظار حتى تحميل كافة العناصر بالفئة '.select--item--32FADYB'
-        all_elements = WebDriverWait(driver, 20).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
-        )
+        time.sleep(2)
         
-        # التحقق من وجود 20 عنصر على الأقل قبل الاستمرار
-        if len(all_elements) >= 20:
-            # استهداف العنصر رقم 20 (الفهرس 19 لأن الفهارس تبدأ من 0)
-            target_element = all_elements[19]
-            action = ActionChains(driver)
-            action.move_to_element(target_element).click().perform()
-            time.sleep(0.6)
-        else:
-            print("لم يتم العثور على عدد كافٍ من العناصر.")
-    
-    except Exception as e:
-        print(f"حدث خطأ أثناء النقر على العناصر المحددة: {e}")
+        fourth_element_to_click = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
+        )
+        action = ActionChains(driver)
+        action.move_to_element(fourth_element_to_click).click().perform()
+        time.sleep(2)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
@@ -75,9 +64,13 @@ def scrape_and_display(product_url):
     # print("List files in the 'drivers' directory:", files_in_drivers)
     # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
     # chrome_driver_path = ChromeDriverManager().install()
-    chrome_driver_path = "./drivers/chromedriver"
-    service = webdriver.ChromeService(executable_path= chrome_driver_path)
-    
+
+    chrome_driver_path = "./drivers/chromedriver"  # تأكد من تحديث هذا المسار حسب موقع chromedriver لديك
+
+    service = Service(executable_path=chrome_driver_path)
+    chrome_options = webdriver.ChromeOptions()
+# يمكنك هنا إضافة أي خيارات إضافية لـ Chrome
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
     # chrome_options.add_argument("--window-size=1920,1080")
     # chrome_options.add_argument("--disable-extensions")
