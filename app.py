@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 # from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# import os 
+from selenium.webdriver.common.keys import Keys
 import time
 
 app = Flask(__name__)
@@ -32,11 +32,12 @@ def click_on_elements(driver):
         twenty_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'select--item--32FADYB')])[20]"))
         )
-
-# استخدام ActionChains للتحرك إلى العنصر والنقر عليه
+        driver.execute_script("arguments[0].scrollIntoView();", twenty_element_to_click)
         action = ActionChains(driver)
         action.move_to_element(twenty_element_to_click).click().perform()
+
         time.sleep(3)
+        
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
