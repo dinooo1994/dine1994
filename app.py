@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 # from webdriver_manager.chrome import ChromeDriverManager
@@ -20,26 +21,21 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(3)
+        time.sleep(0.1)
 
         third_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
         )
         action = ActionChains(driver)
         action.move_to_element(third_element_to_click).click().perform()
-        time.sleep(3)
+        time.sleep(0.1)
         
-        
-
-        all_elements = wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".select--item--32FADYB")))
-
-# التحقق من وجود ما لا يقل عن 20 عنصراً قبل المحاولة للنقر
-        if len(all_elements) >= 20:
-    # النقر على العنصر العشرين
-            all_elements[19].click()  # تذكر أن الفهرسة تبدأ من 0
-        else:
-            print("لم يتم العثور على عدد كافٍ من العناصر.")
-        time.sleep(3)
+        fourth_element_to_click = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
+        )
+        action = ActionChains(driver)
+        action.move_to_element(fourth_element_to_click).click().perform()
+        time.sleep(0.6)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
