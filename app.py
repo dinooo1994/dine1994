@@ -32,10 +32,10 @@ def click_on_elements(driver):
         twenty_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'select--item--32FADYB')])[20]"))
         )
-        driver.execute_script("arguments[0].scrollIntoView();", twenty_element_to_click)
+        driver.execute_script("arguments[0].click();", twenty_element_to_click)
         action = ActionChains(driver)
         action.move_to_element(twenty_element_to_click).click().perform()
-
+        
         time.sleep(3)
         
         second_element_to_click = WebDriverWait(driver, 20).until(
