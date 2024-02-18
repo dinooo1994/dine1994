@@ -2,12 +2,13 @@ from flask import Flask, render_template, request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import os 
+from selenium.webdriver.common.keys import Keys
 import time
 
 app = Flask(__name__)
@@ -17,9 +18,12 @@ def click_on_elements(driver):
         first_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl'))
         )
+        # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
         time.sleep(3)
+
+        
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
@@ -38,12 +42,7 @@ def extract_numerical_value(text):
 
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
-    from selenium import webdriver
-
-    def scrape_and_display(product_url):
-    print("============Start Selenuim==========")
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option('prefs', {'geolocation': {'latitude': 28.0339, 'longitude': 1.6596}})
     # print("Current directory:", os.getcwd())
     # print("List files in the current directory:", os.listdir())
     # drivers_directory = "./drivers"
@@ -69,9 +68,7 @@ def scrape_and_display(product_url):
     # chrome_options.add_argument('--lang=de-DE')
     # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
     # chrome_options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=chrome_options)
-# الآن يمكنك استخدام المشغل لفتح المواقع والتفاعل معها
-
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
         "price": 0,
@@ -84,7 +81,7 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(0.1)
+        time.sleep(0.5)
         click_on_elements(driver)
         time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
