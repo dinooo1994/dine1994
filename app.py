@@ -41,6 +41,7 @@ def extract_numerical_value(text):
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
     chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_experimental_option('prefs', {'geolocation': {'latitude': 28.0339, 'longitude': 1.6596}})
     # print("Current directory:", os.getcwd())
     # print("List files in the current directory:", os.listdir())
     # drivers_directory = "./drivers"
