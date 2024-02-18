@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
+import os 
 import time
 
 app = Flask(__name__)
@@ -21,9 +21,22 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(3)
+        time.sleep(1)
 
+        third_element_to_click = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
+        )
+        action = ActionChains(driver)
+        action.move_to_element(third_element_to_click).click().perform()
+        time.sleep(1)
         
+        fourth_element_to_click = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
+        )
+        action = ActionChains(driver)
+        action.move_to_element(fourth_element_to_click).click().perform()
+        time.sleep(1)
+
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
@@ -81,7 +94,7 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(0.5)
+        time.sleep(0.1)
         click_on_elements(driver)
         time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
