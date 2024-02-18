@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
@@ -21,21 +20,21 @@ def click_on_elements(driver):
         # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
-        time.sleep(1)
+        time.sleep(3)
 
         third_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
         )
         action = ActionChains(driver)
         action.move_to_element(third_element_to_click).click().perform()
-        time.sleep(1)
+        time.sleep(3)
         
         fourth_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.select--item--32FADYB'))
         )
         action = ActionChains(driver)
         action.move_to_element(fourth_element_to_click).click().perform()
-        time.sleep(1)
+        time.sleep(3)
 
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
