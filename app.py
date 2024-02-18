@@ -40,34 +40,35 @@ def extract_numerical_value(text):
 
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
+    from selenium import webdriver
+
     chrome_options = webdriver.ChromeOptions()
+
+# تغيير اللغة إلى العربية
+    chrome_options.add_argument('--lang=ar')
+
+# تغيير الموقع الجغرافي إلى الجزائر (استخدم إحداثيات الجزائر)
     chrome_options.add_experimental_option('prefs', {'geolocation': {'latitude': 28.0339, 'longitude': 1.6596}})
-    # print("Current directory:", os.getcwd())
-    # print("List files in the current directory:", os.listdir())
-    # drivers_directory = "./drivers"
-    # files_in_drivers = os.listdir(drivers_directory)
-    # print("List files in the 'drivers' directory:", files_in_drivers)
-    # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
-    # chrome_driver_path = ChromeDriverManager().install()
-    chrome_driver_path = "drivers/chromedriver"
-    service = webdriver.ChromeService(executable_path= chrome_driver_path)
-    
-    # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
-    # chrome_options.add_argument("--window-size=1920,1080")
-    # chrome_options.add_argument("--disable-extensions")
-    # chrome_options.add_argument("--proxy-server='direct://'")
-    # chrome_options.add_argument("--proxy-bypass-list=*")
-    # chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument('--headless')
+
+# تمثيل عنوان IP معين إذا كنت ترغب في ذلك باستخدام بروكسي
+# chrome_options.add_argument('--proxy-server=http://IP_ADDRESS:PORT')
+
+# إعدادات إضافية إذا لزم الأمر
+    chrome_options.add_argument('--headless')  # لتشغيل المتصفح بدون واجهة رسومية
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--allow-running-insecure-content')
     chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_options.add_argument('--lang=de-DE')
-    # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
-    # chrome_options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+# تحديد مسار ملف التنفيذ لمتصفح Chrome
+    chrome_driver_path = "drivers/chromedriver"
+
+# إنشاء مشغل متصفح Chrome مع الخيارات المعطاة
+    driver = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=chrome_options)
+
+# الآن يمكنك استخدام المشغل لفتح المواقع والتفاعل معها
+
     result = {
         "result_text": "",
         "price": 0,
