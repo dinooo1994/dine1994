@@ -17,7 +17,6 @@ def click_on_elements(driver):
         first_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl'))
         )
-        # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()        
         time.sleep(3)
