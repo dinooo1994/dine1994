@@ -23,20 +23,6 @@ def click_on_elements(driver):
         action.move_to_element(first_element_to_click).click().perform()        
         time.sleep(3)
 
-        third_element_to_click = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.select--text--1b85oDo'))
-        )
-        action = ActionChains(driver)
-        action.move_to_element(third_element_to_click).click().perform()
-        time.sleep(3)
-        twenty_element_to_click = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "(//div[contains(@class, 'select--item--32FADYB')])[20]"))
-        )
-        driver.execute_script("arguments[0].click();", twenty_element_to_click)
-        action = ActionChains(driver)
-        action.move_to_element(twenty_element_to_click).click().perform()
-        
-        time.sleep(3)
         
         second_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
