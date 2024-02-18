@@ -1,33 +1,30 @@
 from flask import Flask, render_template, request
 from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
-# from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# import os 
 import time
 
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
-        # Wait for the element to be present
-        first_element_to_click = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl'))
-        )
-        # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
-        action = ActionChains(driver)
-        action.move_to_element(first_element_to_click).click().perform()
-        time.sleep(3)
-        second_element_to_click = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
-        )
-        # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
-        action = ActionChains(driver)
-        action.move_to_element(second_element_to_click).click().perform()
+        first_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div/div'
+        first_element = driver.find_element(By.XPATH, first_element_xpath)
+        ActionChains(driver).move_to_element(first_element).click().perform()
+        time.sleep(1)  
+        second_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div'
+        second_element = driver.find_element(By.XPATH, second_element_xpath)
+        ActionChains(driver).move_to_element(second_element).click().perform()
+        time.sleep(1)
+        third_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[2]/div/div[2]/div[56]'
+        third_element = driver.find_element(By.XPATH, third_element_xpath)
+        ActionChains(driver).move_to_element(third_element).click().perform()
+        time.sleep(1)
+        fourth_element_xpath = '//*[@id="_full_container_header_23_"]/div[2]/div/div[2]/div[2]/div[2]/div[7]'
+        fourth_element = driver.find_element(By.XPATH, fourth_element_xpath)
+        ActionChains(driver).move_to_element(fourth_element).click().perform()
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
 def extract_numerical_value(text):
@@ -39,31 +36,15 @@ def extract_numerical_value(text):
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
     chrome_options = webdriver.ChromeOptions()
-    # print("Current directory:", os.getcwd())
-    # print("List files in the current directory:", os.listdir())
-    # drivers_directory = "./drivers"
-    # files_in_drivers = os.listdir(drivers_directory)
-    # print("List files in the 'drivers' directory:", files_in_drivers)
-    # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
-    # chrome_driver_path = ChromeDriverManager().install()
-    chrome_driver_path = "./drivers/chromedriver"
+    chrome_driver_path = "drivers/chromedriver"
     service = webdriver.ChromeService(executable_path= chrome_driver_path)
-    
-    # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
-    # chrome_options.add_argument("--window-size=1920,1080")
-    # chrome_options.add_argument("--disable-extensions")
-    # chrome_options.add_argument("--proxy-server='direct://'")
-    # chrome_options.add_argument("--proxy-bypass-list=*")
-    # chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--allow-running-insecure-content')
     chrome_options.add_argument("--disable-dev-shm-usage")
-    # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
-    # chrome_options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+   driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
         "price": 0,
@@ -78,7 +59,7 @@ def scrape_and_display(product_url):
         driver.get(product_url)
         time.sleep(0.5)
         click_on_elements(driver)
-        time.sleep(0.5)
+        # time.sleep(0.5)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
         target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
