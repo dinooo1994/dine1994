@@ -63,8 +63,8 @@ def scrape_and_display(product_url):
     chrome_options.add_argument("--disable-dev-shm-usage")
     # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
     # chrome_options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=chrome_options)
-    #driver = webdriver.Chrome(service=service, options=chrome_options)
+    #driver = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=chrome_options)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
         "price": 0,
