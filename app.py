@@ -2,14 +2,17 @@ from flask import Flask, render_template, request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import os 
 import time
+
 
 app = Flask(__name__)
 def click_on_elements(driver):
@@ -38,7 +41,8 @@ def extract_numerical_value(text):
         return 0
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
-    chrome_options = webdriver.ChromeOptions()
+    #chrome_options = webdriver.ChromeOptions()
+    chrome_options = Options()
     # print("Current directory:", os.getcwd())
     # print("List files in the current directory:", os.listdir())
     # drivers_directory = "./drivers"
@@ -55,6 +59,11 @@ def scrape_and_display(product_url):
     # chrome_options.add_argument("--proxy-server='direct://'")
     # chrome_options.add_argument("--proxy-bypass-list=*")
     # chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument("--disable-notifications")
+    chrome_options.add_experimental_option("prefs", {
+          "profile.default_content_setting_values.geolocation": 1, # Allow geolocation
+          "geolocation": True,
+     })
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
@@ -63,7 +72,26 @@ def scrape_and_display(product_url):
     chrome_options.add_argument("--disable-dev-shm-usage")
     # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
     # chrome_options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    desired_capabilities = DesiredCapabilities.CHROME.copy()
+    desired_capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
+    desired_capabilities["browserName"] = "chrome"
+    desired_capabilities['locationContextEnabled'] = True
+    desired_capabilities['goog:chromeOptions'] = {}
+    desired_capabilities['goog:chromeOptions']['prefs'] = {
+        "profile.default_content_setting_values.geolocation": 1, # Allow geolocation
+    }
+    desired_capabilities['goog:chromeOptions']['args'] = ['--disable-notifications']
+
+    service = ChromeService(executable_path=ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=desired_capabilities)
+
+# تعيين الموقع الجغرافي للمتصفح
+    driver.execute_cdp_cmd("Emulation.setGeolocationOverride", {
+        "latitude": 36.737232,
+        "longitude": 3.086472,
+        "accuracy": 100
+    }) 
+    #driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
         "price": 0,
