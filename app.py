@@ -51,7 +51,7 @@ def scrape_and_display(product_url):
     # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
     # chrome_driver_path = ChromeDriverManager().install()
     chrome_driver_path = "./drivers/chromedriver"
-    service = webdriver.ChromeService(executable_path= chrome_driver_path)
+    #service = webdriver.ChromeService(executable_path= chrome_driver_path)
     
     # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
     # chrome_options.add_argument("--window-size=1920,1080")
