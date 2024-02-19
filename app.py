@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
@@ -9,18 +10,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os 
 import time
+
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
+        # Wait for the element to be present
         first_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl'))
         )
+        # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()
-        time.sleep(3)
+        time.sleep(2)
         second_element_to_click = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
+        # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
     except Exception as e:
@@ -34,14 +39,30 @@ def extract_numerical_value(text):
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
     chrome_options = webdriver.ChromeOptions()
+    # print("Current directory:", os.getcwd())
+    # print("List files in the current directory:", os.listdir())
+    # drivers_directory = "./drivers"
+    # files_in_drivers = os.listdir(drivers_directory)
+    # print("List files in the 'drivers' directory:", files_in_drivers)
+    # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
+    # chrome_driver_path = ChromeDriverManager().install()
     chrome_driver_path = "./drivers/chromedriver"
     service = webdriver.ChromeService(executable_path= chrome_driver_path)
+    
+    # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
+    # chrome_options.add_argument("--window-size=1920,1080")
+    # chrome_options.add_argument("--disable-extensions")
+    # chrome_options.add_argument("--proxy-server='direct://'")
+    # chrome_options.add_argument("--proxy-bypass-list=*")
+    # chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--allow-running-insecure-content')
     chrome_options.add_argument("--disable-dev-shm-usage")
+    # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
+    # chrome_options.add_argument(f'user-agent={user_agent}')
     driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
