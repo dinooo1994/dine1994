@@ -93,7 +93,7 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(0.1)
+        time.sleep(1)
         click_on_elements(driver)
         time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
