@@ -45,6 +45,7 @@ def scrape_and_display(product_url):
     # print("List files in the 'drivers' directory:", files_in_drivers)
     # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
     # chrome_driver_path = ChromeDriverManager().install()
+    chrome_options.add_experimental_option('prefs', {'geolocation': {'latitude': 28.0339, 'longitude': 1.6596}})
     chrome_driver_path = "./drivers/chromedriver"
     service = webdriver.ChromeService(executable_path= chrome_driver_path)
     
@@ -62,7 +63,8 @@ def scrape_and_display(product_url):
     chrome_options.add_argument("--disable-dev-shm-usage")
     # user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.6167.85 Safari/537.36'
     # chrome_options.add_argument(f'user-agent={user_agent}')
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(executable_path=chrome_driver_path, chrome_options=chrome_options)
+    #driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
         "price": 0,
