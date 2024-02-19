@@ -17,18 +17,16 @@ import time
 app = Flask(__name__)
 def click_on_elements(driver):
     try:
-        # Wait for the element to be present
+
         first_element_to_click = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl'))
         )
-        # first_element_to_click = driver.find_element(By.CSS_SELECTOR, '.ship-to--menuItem--WdBDsYl')
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()
         time.sleep(2)
         second_element_to_click = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
-        # second_element_to_click = driver.find_element(By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy')
         action = ActionChains(driver)
         action.move_to_element(second_element_to_click).click().perform()
     except Exception as e:
@@ -41,24 +39,23 @@ def extract_numerical_value(text):
         return 0
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
-    #chrome_options = webdriver.ChromeOptions()
     chrome_options = Options()
-    # print("Current directory:", os.getcwd())
-    # print("List files in the current directory:", os.listdir())
-    # drivers_directory = "./drivers"
-    # files_in_drivers = os.listdir(drivers_directory)
-    # print("List files in the 'drivers' directory:", files_in_drivers)
-    # chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
-    # chrome_driver_path = ChromeDriverManager().install()
+    print("Current directory:", os.getcwd())
+    print("List files in the current directory:", os.listdir())
+    drivers_directory = "./drivers"
+    files_in_drivers = os.listdir(drivers_directory)
+    print("List files in the 'drivers' directory:", files_in_drivers)
+    chrome_options.binary_location = os.environ.get("/usr/bin/google-chrome")
+    chrome_driver_path = ChromeDriverManager().install()
     chrome_driver_path = "./drivers/chromedriver"
     #service = webdriver.ChromeService(executable_path= chrome_driver_path)
     
     # service = webdriver.ChromeService(executable_path= ChromeDriverManager().install())
-    # chrome_options.add_argument("--window-size=1920,1080")
-    # chrome_options.add_argument("--disable-extensions")
-    # chrome_options.add_argument("--proxy-server='direct://'")
-    # chrome_options.add_argument("--proxy-bypass-list=*")
-    # chrome_options.add_argument("--start-maximized")
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--proxy-server='direct://'")
+    chrome_options.add_argument("--proxy-bypass-list=*")
+    chrome_options.add_argument("--start-maximized")
     chrome_options.add_argument("--disable-notifications")
     chrome_options.add_experimental_option("prefs", {
           "profile.default_content_setting_values.geolocation": 1, # Allow geolocation
