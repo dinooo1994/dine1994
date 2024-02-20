@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os 
@@ -36,33 +38,27 @@ def extract_numerical_value(text):
 def scrape_and_display(product_url):
     print("============Start Selenium==========")
     chrome_options = webdriver.ChromeOptions()
-    chrome_driver_path = "./drivers/chromedriver"
-    service = webdriver.ChromeService(executable_path= chrome_driver_path)
+    # Setup for headless Chrome
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--allow-running-insecure-content')
     chrome_options.add_argument("--disable-dev-shm-usage")
-
-    # Emulate geolocation for Algeria (Algiers)
-    latitude = 36.737232
-    longitude = 3.086472
-    accuracy = 100
-
+    
+    # Set geolocation to Algeria
+    geo_location = {
+        "latitude": 36.737232,
+        "longitude": 3.086472,
+        "accuracy": 100
+    }
     chrome_options.add_experimental_option("prefs", {
-        "profile.default_content_setting_values.geolocation": 1, # Allow geolocation
-        "profile.default_content_settings.geolocation": 1, # Allow geolocation
+        "profile.default_content_setting_values.geolocation": 1,  # Enable geolocation
+        "profile.default_content_settings.geolocation": 1,
     })
-
-    driver = webdriver.Chrome(service=service, options=chrome_options)
-
-    # Emulate the geolocation coordinates before accessing the page
-    driver.execute_cdp_cmd("Emulation.setGeolocationOverride", {
-        "latitude": latitude,
-        "longitude": longitude,
-        "accuracy": accuracy
-    })
+    
+    driver = webdriver.Chrome(service=webdriver.ChromeService(ChromeDriverManager().install()), options=chrome_options)
+    driver.execute_cdp_cmd("Emulation.setGeolocationOverride", geo_location)
     result = {
         "result_text": "",
         "price": 0,
@@ -75,9 +71,9 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(1)
+        time.sleep(0.5)
         click_on_elements(driver)
-        time.sleep(1)
+        # time.sleep(0.5)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
         target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
