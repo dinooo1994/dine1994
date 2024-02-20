@@ -19,7 +19,7 @@ def click_on_elements(driver):
         )
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()
-        time.sleep(2)
+        time.sleep(3)
         second_element_to_click = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
@@ -73,9 +73,9 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(0.5)
+        time.sleep(1)
         click_on_elements(driver)
-        # time.sleep(0.5)
+        time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
         target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
