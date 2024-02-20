@@ -44,23 +44,9 @@ def scrape_and_display(product_url):
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--allow-running-insecure-content')
     chrome_options.add_argument("--disable-dev-shm-usage")
-
-    # تعيين الموقع الجغرافي للجزائر
-    chrome_options.add_experimental_option("prefs", {
-        "profile.default_content_setting_values.geolocation": 1, # Allow geolocation
-    })
-
     chrome_driver_path = "./drivers/chromedriver"
     service = webdriver.ChromeService(executable_path=chrome_driver_path)
     driver = webdriver.Chrome(service=service, options=chrome_options)
-
-    # تعيين الموقع الجغرافي للجزائر في Selenium
-    driver.execute_cdp_cmd("Emulation.setGeolocationOverride", {
-        "latitude": 36.737232,
-        "longitude": 3.086472,
-        "accuracy": 100
-    })
-
     result = {
         "result_text": "",
         "price": 0,
@@ -181,4 +167,4 @@ def index():
         return render_template('index.html', result=result)
     return render_template('index.html', result=None)
 if __name__ == '__main__':
-    app.run(debug=False, threaded=True)
+    app.run(debug=False, threaded=True) 
