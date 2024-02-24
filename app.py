@@ -34,7 +34,7 @@ def extract_numerical_value(text):
 def scrape_and_display(product_url):
     print("============Start Selenuim==========")
     chrome_options = webdriver.ChromeOptions()
-    chrome_driver_path = "drivers/chromedriver"
+    chrome_driver_path = "./drivers/chromedriver"
     service = webdriver.ChromeService(executable_path= chrome_driver_path)
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
@@ -55,9 +55,9 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(1)
+        time.sleep(2)
         click_on_elements(driver)
-        time.sleep(1)
+        time.sleep(2)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
         target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
