@@ -9,9 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os 
 import time
-
 app = Flask(__name__)
-
 def click_on_elements(driver):
     try:
         first_element_to_click = WebDriverWait(driver, 20).until(
@@ -19,7 +17,7 @@ def click_on_elements(driver):
         )
         action = ActionChains(driver)
         action.move_to_element(first_element_to_click).click().perform()
-        time.sleep(2)
+        time.sleep(3)
         second_element_to_click = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '.es--saveBtn--w8EuBuy'))
         )
@@ -27,38 +25,24 @@ def click_on_elements(driver):
         action.move_to_element(second_element_to_click).click().perform()
     except Exception as e:
         print(f"Error clicking on the specified elements: {e}")
-
 def extract_numerical_value(text):
     try:
         return float(''.join(c for c in text if c.isdigit() or c in ['.', ',']))
     except ValueError:
         print("Error!! in extract_numerical_value function...")
         return 0
-
 def scrape_and_display(product_url):
-    print("============Start Selenium==========")
+    print("============Start Selenuim==========")
     chrome_options = webdriver.ChromeOptions()
-    # Setup for headless Chrome
+    chrome_driver_path = "drivers/chromedriver"
+    service = webdriver.ChromeService(executable_path= chrome_driver_path)
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--allow-running-insecure-content')
     chrome_options.add_argument("--disable-dev-shm-usage")
-    
-    # Set geolocation to Algeria
-    geo_location = {
-        "latitude": 36.737232,
-        "longitude": 3.086472,
-        "accuracy": 100
-    }
-    chrome_options.add_experimental_option("prefs", {
-        "profile.default_content_setting_values.geolocation": 1,  # Enable geolocation
-        "profile.default_content_settings.geolocation": 1,
-    })
-    
-    driver = webdriver.Chrome(service=webdriver.ChromeService(ChromeDriverManager().install()), options=chrome_options)
-    driver.execute_cdp_cmd("Emulation.setGeolocationOverride", geo_location)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     result = {
         "result_text": "",
         "price": 0,
@@ -71,9 +55,9 @@ def scrape_and_display(product_url):
     total_value = 0 
     try:
         driver.get(product_url)
-        time.sleep(0.5)
+        time.sleep(1)
         click_on_elements(driver)
-        # time.sleep(0.5)
+        time.sleep(1)
         xpath = '//img[@class="price-banner--slogan--SlQzWHE pdp-comp-banner-slogan"]'
         image_elements = driver.find_elements(By.XPATH, xpath)
         target_image_url = "https://ae01.alicdn.com/kf/Sabdabe1e0ed84a179ab6c06fc9f316769/380x144.png_.webp"
@@ -180,3 +164,4 @@ def index():
     return render_template('index.html', result=None)
 if __name__ == '__main__':
     app.run(debug=False, threaded=True)
+
